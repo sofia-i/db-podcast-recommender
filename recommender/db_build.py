@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 import psycopg2
 
-load_dotenv()
+load_dotenv(override=True)
 
 CONNECTION = os.getenv("TS_CONN_STRING") # paste connection string here or read from .env file
 
@@ -23,8 +23,8 @@ CREATE TABLE podcast (
 CREATE_SEGMENT_TABLE = """
 CREATE TABLE podcast_segment(
     id          INT PRIMARY KEY,
-    start_time  TIME,
-    end_time    TIME,
+    start_time  FLOAT,
+    end_time    FLOAT,
     content     TEXT,
     embedding   vector(128),
     podcast_id  INT,
