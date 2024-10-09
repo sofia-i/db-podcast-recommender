@@ -35,7 +35,7 @@ def print_markdown_table(cols, data, truncate=True, decimal_places=3):
         print("|", " | ".join(datastrs), "|")
 
 
-def find_similar_segments(conn, input_segment_id, count, reverse=False):
+def find_similar_segments(conn_str, input_segment_id, count, reverse=False):
     """
         Find `count` similar segments to the segment with id `input_segment_id`
         If reverse, find most dissimilar segments instead of most similar.
@@ -65,7 +65,7 @@ def find_similar_segments(conn, input_segment_id, count, reverse=False):
     """
 
     data = None
-    with psycopg2.connect(CONNECTION) as conn:
+    with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
         cursor.execute(query)
         field_names = [i[0] for i in cursor.description]
@@ -73,7 +73,7 @@ def find_similar_segments(conn, input_segment_id, count, reverse=False):
 
     return field_names, data
 
-def find_similar_episodes_to_seg(conn, input_segment_id, count):
+def find_similar_episodes_to_seg(conn_str, input_segment_id, count):
     """
         Find `count` similar episodes to the segment with id `input_segment_id`
     """
@@ -101,7 +101,7 @@ def find_similar_episodes_to_seg(conn, input_segment_id, count):
     """
 
     data = None
-    with psycopg2.connect(CONNECTION) as conn:
+    with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
         cursor.execute(query)
         field_names = [i[0] for i in cursor.description]
@@ -109,7 +109,7 @@ def find_similar_episodes_to_seg(conn, input_segment_id, count):
 
     return field_names, data
 
-def find_similar_episodes_to_ep(conn, ep_id, count):
+def find_similar_episodes_to_ep(conn_str, ep_id, count):
     """
         Find `count` similar episodes to the podcast episode with id `ep_id`
     """
@@ -137,7 +137,7 @@ def find_similar_episodes_to_ep(conn, ep_id, count):
     """
 
     data = None
-    with psycopg2.connect(CONNECTION) as conn:
+    with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
         cursor.execute(query)
         field_names = [i[0] for i in cursor.description]
