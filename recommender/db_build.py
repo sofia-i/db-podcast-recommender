@@ -10,24 +10,24 @@ load_dotenv(override=True)
 CONNECTION = os.getenv("TS_CONN_STRING") # paste connection string here or read from .env file
 
 # need to run this to enable vector data type
-CREATE_EXTENSION = "CREATE EXTENSION vector"
+CREATE_EXTENSION = "CREATE EXTENSION IF NOT EXISTS vector"
 
 # TODO: Add create table statement
 CREATE_PODCAST_TABLE = """
 CREATE TABLE podcast (
-    id      INT PRIMARY KEY,
+    id      CHAR(11) PRIMARY KEY,
     title   TEXT
 );
 """
 # TODO: Add create table statement
 CREATE_SEGMENT_TABLE = """
 CREATE TABLE podcast_segment(
-    id          INT PRIMARY KEY,
+    id          VARCHAR(10) PRIMARY KEY,
     start_time  FLOAT,
     end_time    FLOAT,
     content     TEXT,
     embedding   vector(128),
-    podcast_id  INT,
+    podcast_id  CHAR(11),
     FOREIGN KEY (podcast_id) REFERENCES podcast(id)
         ON UPDATE RESTRICT
         ON DELETE CASCADE

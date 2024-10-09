@@ -49,7 +49,7 @@ with zipfile.ZipFile('data/documents.zip', 'r') as doc_archive:
 
                 if podcast_id not in podcast_data:
                     podcast_data[podcast_id] = {
-                        'podcast_id': podcast_id,
+                        'id': podcast_id,
                         'title': title
                     }
 
@@ -63,7 +63,8 @@ with zipfile.ZipFile('data/documents.zip', 'r') as doc_archive:
                 segment_data[id]['podcast_id'] = podcast_id
 
 # HINT: In addition to the embedding and document files you likely need to load the raw data via the hugging face datasets library
-ds = load_dataset("Whispering-GPT/lex-fridman-podcast")
+# TODO: WHY??
+# ds = load_dataset("Whispering-GPT/lex-fridman-podcast")
 
 
 # TODO: Insert into postgres
