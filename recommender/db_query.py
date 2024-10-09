@@ -9,7 +9,7 @@ def print_csv(cols, data):
     for entry in data:
         print(";".join(map(str, entry)))
 
-def print_markdown_table(cols, data, truncate=True, decimal_places=2):
+def print_markdown_table(cols, data, truncate=True, decimal_places=3):
     # header titles
     print("|", " | ".join(cols), "|")
     # header underline
@@ -141,7 +141,7 @@ def q2():
     print_markdown_table(cols2, data2)
 
 def q3():
-    cols3, data3 = find_similar_segments(CONNECTION, "48:551", count=5)
+    cols3, data3 = find_similar_segments(CONNECTION, "48:511", count=5)
     print("Segments similar to 48:551:")
     print()
     print_markdown_table(cols3, data3)
@@ -168,16 +168,25 @@ def q6():
     print()
     print_markdown_table(cols6, data6)
     
-# TODO: exclude whole podcast episode?
+# TODO: exclude whole podcast episode when querying by segment?
 
-q1()
-print("\n\n")
-q2()
-print("\n\n")
-q3()
-print("\n\n")
-q4()
-print("\n\n")
-q5()
-print("\n\n")
-q6()
+def all_qs():
+    print("~~~~~~~~~~~~~Q1~~~~~~~~~~~~~")
+    q1()
+    print("\n\n")
+    print("~~~~~~~~~~~~~Q2~~~~~~~~~~~~~")
+    q2()
+    print("\n\n")
+    print("~~~~~~~~~~~~~Q3~~~~~~~~~~~~~")
+    q3()
+    print("\n\n")
+    print("~~~~~~~~~~~~~Q4~~~~~~~~~~~~~")
+    q4()
+    print("\n\n")
+    print("~~~~~~~~~~~~~Q5~~~~~~~~~~~~~")
+    q5()
+    print("\n\n")
+    print("~~~~~~~~~~~~~Q6~~~~~~~~~~~~~")
+    q6()
+
+all_qs()
