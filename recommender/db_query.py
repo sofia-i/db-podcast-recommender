@@ -35,7 +35,8 @@ def print_markdown_table(cols, data, truncate=True, decimal_places=3):
         print("|", " | ".join(datastrs), "|")
 
 
-def find_similar_segments(conn_str, input_segment_id, count, reverse=False):
+def find_similar_segments(conn_str, input_segment_id, count, reverse=False,
+                          print_query=False, print_output=False):
     """
         Find `count` similar segments to the segment with id `input_segment_id`
         If reverse, find most dissimilar segments instead of most similar.
@@ -64,6 +65,11 @@ def find_similar_segments(conn_str, input_segment_id, count, reverse=False):
     LIMIT {count};
     """
 
+    if print_query:
+        print("Query:")
+        print(query)
+        print()
+
     data = None
     with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
@@ -71,9 +77,15 @@ def find_similar_segments(conn_str, input_segment_id, count, reverse=False):
         field_names = [i[0] for i in cursor.description]
         data = cursor.fetchall()
 
+    if print_output:
+        for entry in data:
+            print(entry)
+        print()
+
     return field_names, data
 
-def find_similar_episodes_to_seg(conn_str, input_segment_id, count):
+def find_similar_episodes_to_seg(conn_str, input_segment_id, count,
+                                 print_query=False, print_output=False):
     """
         Find `count` similar episodes to the segment with id `input_segment_id`
     """
@@ -100,6 +112,11 @@ def find_similar_episodes_to_seg(conn_str, input_segment_id, count):
     LIMIT {count};
     """
 
+    if print_query:
+        print("Query:")
+        print(query)
+        print()
+
     data = None
     with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
@@ -107,9 +124,15 @@ def find_similar_episodes_to_seg(conn_str, input_segment_id, count):
         field_names = [i[0] for i in cursor.description]
         data = cursor.fetchall()
 
+    if print_output:
+        for entry in data:
+            print(entry)
+        print()
+
     return field_names, data
 
-def find_similar_episodes_to_ep(conn_str, ep_id, count):
+def find_similar_episodes_to_ep(conn_str, ep_id, count,
+                                print_query=False, print_output=False):
     """
         Find `count` similar episodes to the podcast episode with id `ep_id`
     """
@@ -136,12 +159,22 @@ def find_similar_episodes_to_ep(conn_str, ep_id, count):
     LIMIT {count};
     """
 
+    if print_query:
+        print("Query:")
+        print(query)
+        print()
+
     data = None
     with psycopg2.connect(conn_str) as conn:
         cursor = conn.cursor()
         cursor.execute(query)
         field_names = [i[0] for i in cursor.description]
         data = cursor.fetchall()
+
+    if print_output:
+        for entry in data:
+            print(entry)
+        print()
 
     return field_names, data
 
@@ -150,32 +183,37 @@ load_dotenv()
 CONNECTION = os.getenv("TS_CONN_STRING") # paste connection string here or read from .env file
 
 def q1():
-    cols1, data1 = find_similar_segments(CONNECTION, "267:476", count=5)
+    cols1, data1 = find_similar_segments(CONNECTION, "267:476", count=5, 
+                                         print_query=True, print_output=True)
     print("Segments similar to 267:476:")
     print()
     print_markdown_table(cols1, data1)
 
 def q2():
-    cols2, data2 = find_similar_segments(CONNECTION, "267:476", count=5, reverse=True)
+    cols2, data2 = find_similar_segments(CONNECTION, "267:476", count=5, reverse=True, 
+                                         print_query=True, print_output=True)
     print("Segments dissimilar to 267:476:")
     print()
     print_markdown_table(cols2, data2)
 
 def q3():
-    cols3, data3 = find_similar_segments(CONNECTION, "48:511", count=5)
+    cols3, data3 = find_similar_segments(CONNECTION, "48:511", count=5,
+                                         print_query=True, print_output=True)
     print("Segments similar to 48:511:")
     print()
     print_markdown_table(cols3, data3)
 
 def q4():
-    cols4, data4 = find_similar_segments(CONNECTION, "51:56", count=5)
+    cols4, data4 = find_similar_segments(CONNECTION, "51:56", count=5,
+                                         print_query=True, print_output=True)
     print("Segments similar to 51:56:")
     print()
     print_markdown_table(cols4, data4)
 
 def q5():
     for seg_id in ["267:476", "48:511", "51:56"]:
-        cols, data = find_similar_episodes_to_seg(CONNECTION, seg_id, 5)
+        cols, data = find_similar_episodes_to_seg(CONNECTION, seg_id, 5,
+                                                  print_query=True, print_output=True)
         print()
         print("Episodes similar to segment", seg_id)
         print()
@@ -184,7 +222,8 @@ def q5():
 
 def q6():
     ep_id = "VeH7qKZr0WI"
-    cols6, data6 = find_similar_episodes_to_ep(CONNECTION, ep_id, 5)
+    cols6, data6 = find_similar_episodes_to_ep(CONNECTION, ep_id, 5,
+                                               print_query=True, print_output=True)
     print("Episodes similar to episode", ep_id)
     print()
     print_markdown_table(cols6, data6)
