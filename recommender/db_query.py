@@ -5,11 +5,19 @@ import psycopg2
 from dotenv import load_dotenv
 
 def print_csv(cols, data):
+    """
+        Print column names and data as csv, with ; as the separator
+    """
     print(";".join(cols))
     for entry in data:
         print(";".join(map(str, entry)))
 
 def print_markdown_table(cols, data, truncate=True, decimal_places=3):
+    """
+        Print data in the format of a markdown table
+        With cols as headers
+        If truncate, round float values to `decimal_places` number of decimal places
+    """
     # header titles
     print("|", " | ".join(cols), "|")
     # header underline
@@ -28,6 +36,11 @@ def print_markdown_table(cols, data, truncate=True, decimal_places=3):
 
 
 def find_similar_segments(conn, input_segment_id, count, reverse=False):
+    """
+        Find `count` similar segments to the segment with id `input_segment_id`
+        If reverse, find most dissimilar segments instead of most similar.
+    """
+
     query = f"""
     SELECT i.title as "Podcast name", i.id as "Segment ID", 
             i.content as "Segment raw text", i.start_time as "Start time", 
@@ -61,6 +74,10 @@ def find_similar_segments(conn, input_segment_id, count, reverse=False):
     return field_names, data
 
 def find_similar_episodes_to_seg(conn, input_segment_id, count):
+    """
+        Find `count` similar episodes to the segment with id `input_segment_id`
+    """
+
     # NOTE: assuming no two episode titles are the same
     query = f"""
     SELECT i.title as "Podcast title", i.dist as "Embedding Distance"
@@ -93,6 +110,10 @@ def find_similar_episodes_to_seg(conn, input_segment_id, count):
     return field_names, data
 
 def find_similar_episodes_to_ep(conn, ep_id, count):
+    """
+        Find `count` similar episodes to the podcast episode with id `ep_id`
+    """
+
     query = f"""
     SELECT i.title as "Podcast title", i.dist as "Embedding Distance"
     FROM
