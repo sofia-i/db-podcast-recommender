@@ -12,14 +12,14 @@ CONNECTION = os.getenv("TS_CONN_STRING") # paste connection string here or read 
 # need to run this to enable vector data type
 CREATE_EXTENSION = "CREATE EXTENSION IF NOT EXISTS vector"
 
-# TODO: Add create table statement
+# Create podcast table
 CREATE_PODCAST_TABLE = """
 CREATE TABLE podcast (
     id      CHAR(11) PRIMARY KEY,
     title   TEXT
 );
 """
-# TODO: Add create table statement
+# Create segment table
 CREATE_SEGMENT_TABLE = """
 CREATE TABLE podcast_segment(
     id          VARCHAR(10) PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE podcast_segment(
 """
 
 conn = psycopg2.connect(CONNECTION)
-# TODO: Create tables with psycopg2 (example: https://www.geeksforgeeks.org/executing-sql-query-with-psycopg2-in-python/)
+# Create tables with psycopg2 (example: https://www.geeksforgeeks.org/executing-sql-query-with-psycopg2-in-python/)
 with psycopg2.connect(CONNECTION) as conn:
     cursor = conn.cursor()
     cursor.execute(CREATE_EXTENSION)

@@ -21,7 +21,7 @@ segment_data = {}
 # Segment Data (id, start_time, end_time, content, embedding, podcast_id)
 # Podcast Data (id, title)
 
-# TODO: Read the embedding files
+# Read the embedding files
 with zipfile.ZipFile('data/embedding.zip', 'r') as embed_archive:
    for name in tqdm(embed_archive.namelist()):
        with embed_archive.open(name) as embed:
@@ -34,7 +34,7 @@ with zipfile.ZipFile('data/embedding.zip', 'r') as embed_archive:
                     'embedding': embedding
                 }
 
-# TODO: Read documents files
+# Read documents files
 with zipfile.ZipFile('data/documents.zip', 'r') as doc_archive:
    for name in tqdm(doc_archive.namelist()):
        with doc_archive.open(name) as doc:
@@ -67,7 +67,7 @@ with zipfile.ZipFile('data/documents.zip', 'r') as doc_archive:
 # ds = load_dataset("Whispering-GPT/lex-fridman-podcast")
 
 
-# TODO: Insert into postgres
+# Insert into postgres
 # HINT: use the recommender.utils.fast_pg_insert function to insert data into the database
 # otherwise inserting the 800k documents will take a very, very long time
 podcast_df = pd.DataFrame(podcast_data.values())
