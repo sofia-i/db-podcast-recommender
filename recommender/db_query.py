@@ -163,7 +163,7 @@ def q2():
 
 def q3():
     cols3, data3 = find_similar_segments(CONNECTION, "48:511", count=5)
-    print("Segments similar to 48:551:")
+    print("Segments similar to 48:511:")
     print()
     print_markdown_table(cols3, data3)
 
