@@ -63,7 +63,7 @@ with zipfile.ZipFile('data/documents.zip', 'r') as doc_archive:
                 segment_data[id]['podcast_id'] = podcast_id
 
 # HINT: In addition to the embedding and document files you likely need to load the raw data via the hugging face datasets library
-# TODO: WHY??
+# I'm getting the podcast data from the document files instead, gets the same information
 # ds = load_dataset("Whispering-GPT/lex-fridman-podcast")
 
 
